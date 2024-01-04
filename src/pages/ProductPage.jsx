@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useProducts } from "../context/ProductContext";
 
 import Card from "../components/Card";
@@ -13,6 +13,12 @@ const ProductPage = () => {
     const products = useProducts();
 
     const [search, setSearch] = useState("");
+    const [displayed, setDisplayed] = useState([]);
+
+    useEffect(() => {
+        setDisplayed(products);
+    }, [products]);
+
     const searchHandler = () => {
         console.log("Search");
     };
@@ -43,8 +49,8 @@ const ProductPage = () => {
             {/* Content */}
             <div className={styles.container}>
                 <div className={styles.products}>
-                    {!products.length && <Loader />}
-                    {products.map((p) => (
+                    {!displayed.length && <Loader />}
+                    {displayed.map((p) => (
                         <Card key={p.id} data={p} />
                     ))}
                 </div>
