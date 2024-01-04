@@ -14,21 +14,26 @@ const ProductPage = () => {
 
     const [search, setSearch] = useState("");
     const [displayed, setDisplayed] = useState([]);
+    const [query, setQuery] = useState({});
 
     useEffect(() => {
         setDisplayed(products);
     }, [products]);
 
+    useEffect(() => {
+        console.log(query);
+    }, [query]);
     const searchHandler = () => {
-        console.log("Search");
+        setQuery((query) => ({ ...query, search }));
     };
 
     const categoryHandler = (e) => {
         const { tagName } = e.target;
         const category = e.target.innerText.toLowerCase();
         if (tagName !== "LI") return;
-        console.log(category);
+        setQuery((query) => ({ ...query, category }));
     };
+
     return (
         <>
             {/* Search box */}
