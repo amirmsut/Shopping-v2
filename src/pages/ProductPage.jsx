@@ -14,6 +14,7 @@ import { FaListUl } from "react-icons/fa";
 import {
     createQueryObject,
     filterProducts,
+    getInitialQuery,
     searchProducts,
 } from "../helpers/helper";
 
@@ -27,10 +28,12 @@ const ProductPage = () => {
 
     useEffect(() => {
         setDisplayed(products);
+        setQuery(getInitialQuery(searchParams));
     }, [products]);
 
     useEffect(() => {
         setSearchParams(query);
+        setSearch(query.search || "");
         let finalProducts = searchProducts(products, query.search);
         finalProducts = filterProducts(finalProducts, query.category);
         setDisplayed(finalProducts);
