@@ -11,13 +11,13 @@ body {
     background-color: #f9fafc;
 }
 
-a {
-    text-decoration: inherit;
-    color: inherit;
-}
-
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+a {
+    text-decoration: inherit;
+    color: inherit;
 }
