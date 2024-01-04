@@ -3,6 +3,7 @@ import DetailsPage from "./pages/DetailsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ProductPage from "./pages/ProductPage";
 import PageNotFound from "./pages/404";
+
 function App() {
     return (
         <Routes>
