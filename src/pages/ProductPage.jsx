@@ -57,7 +57,7 @@ const ProductPage = () => {
                 </div>
 
                 {/* Sidebar */}
-                <Sidebar setQuery={setQuery} />
+                <Sidebar query={query} setQuery={setQuery} />
             </div>
         </>
     );
