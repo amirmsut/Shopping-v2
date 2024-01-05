@@ -1,8 +1,9 @@
-import { Children, createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 // helpers
 import { sumProducts } from "../helpers/helper";
 
+// Initial
 const initialState = {
     selectedItems: [],
     itemsCounter: 0,
@@ -11,7 +12,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-    console.log(action);
     switch (action.type) {
         //
         // ADD_ITEM
@@ -29,6 +29,7 @@ const reducer = (state, action) => {
                 ...sumProducts(state.selectedItems),
                 checkout: false,
             };
+
         // REMOVE_ITEM
         case "REMOVE_ITEM":
             const newSelectedItems = state.selectedItems.filter(
@@ -37,7 +38,8 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 selectedItems: [...newSelectedItems],
-                ...sumProducts(newSelectedItems),
+                // ...sumProducts(newSelectedItems),
+                ...sumProducts(state.selectedItems),
             };
 
         // INCREASE
@@ -45,7 +47,7 @@ const reducer = (state, action) => {
             const increaseIndex = state.selectedItems.findIndex(
                 (item) => item.id === action.payload.id
             );
-            state.selectedItems[index].quantity++;
+            state.selectedItems[increaseIndex].quantity++;
             return {
                 ...state,
                 ...sumProducts(state.selectedItems),
@@ -56,7 +58,7 @@ const reducer = (state, action) => {
             const decreaseIndex = state.selectedItems.findIndex(
                 (item) => item.id === action.payload.id
             );
-            state.selectedItems[index].quantity--;
+            state.selectedItems[decreaseIndex].quantity--;
             return {
                 ...state,
                 ...sumProducts(state.selectedItems),
@@ -83,8 +85,8 @@ function CartProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     return (
-        <CartContext.Provider value={{ state: state, dispatch: dispatch }}>
-            {/* <CartContext.Provider value={{ state, dispatch }}> */}
+        // <CartContext.Provider value={{ state: state, dispatch: dispatch }}>
+        <CartContext.Provider value={{ state, dispatch }}>
             {children}
         </CartContext.Provider>
     );

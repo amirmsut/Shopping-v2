@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TbShoppingBagCheck, TbListDetails } from "react-icons/tb";
-import { shortenText } from "../helpers/helper";
+import { MdDeleteOutline } from "react-icons/md";
+import { productQuantity, shortenText } from "../helpers/helper";
 import { useCart } from "../context/CartContext";
 
 // styles
@@ -11,9 +12,13 @@ function Card({ data }) {
     const { id, title, image, price } = data;
 
     const [state, dispatch] = useCart();
+    console.log(state);
 
-    const clickHandler = () => {
-        dispatch({ type: "ADD_ITEM", payload: data });
+    const quantity = productQuantity(state, id);
+    console.log(quantity);
+
+    const clickHandler = (type) => {
+        dispatch({ type, payload: data });
         // this use from --> cartContext => reducer(state,action)
     };
 
@@ -26,10 +31,29 @@ function Card({ data }) {
                 <Link to={`/products/${id}`}>
                     <TbListDetails />
                 </Link>
-                <div className="">
-                    <button onClick={clickHandler}>
-                        <TbShoppingBagCheck />
-                    </button>
+                {/*  */}
+                <div>
+                    {quantity === 1 && (
+                        <button onClick={() => clickHandler("REMOVE_ITEM")}>
+                            <MdDeleteOutline />
+                        </button>
+                    )}
+                    {quantity > 1 && (
+                        <button onClick={() => clickHandler("DECREASE")}>
+                            -
+                        </button>
+                    )}
+                    {!!quantity && <span>{quantity}</span>}
+
+                    {quantity === 0 ? (
+                        <button onClick={() => clickHandler("ADD_ITEM")}>
+                            <TbShoppingBagCheck />
+                        </button>
+                    ) : (
+                        <button onClick={() => clickHandler("INCREASE")}>
+                            +
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
