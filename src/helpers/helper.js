@@ -40,10 +40,27 @@ const getInitialQuery = (searchParams) => {
     return query;
 };
 
+const sumProducts = (p) => {
+    const itemsCounter = p.reduce(
+        (counter, currentProduct) => counter + currentProduct.quantity,
+        0
+    );
+    const total = p
+        .reduce(
+            (counter, currentProduct) =>
+                counter + currentProduct.price * currentProduct.quantity,
+            0
+        )
+        .toFixed(2);
+
+    return { itemsCounter, total };
+};
+
 export {
     shortenText,
     searchProducts,
     filterProducts,
     createQueryObject,
     getInitialQuery,
+    sumProducts,
 };
