@@ -11,8 +11,10 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-    // console.log(action);
+    console.log(action);
     switch (action.type) {
+        //
+        // ADD_ITEM
         case "ADD_ITEM":
             if (
                 !state.selectedItems.find(
@@ -26,6 +28,47 @@ const reducer = (state, action) => {
                 ...state,
                 ...sumProducts(state.selectedItems),
                 checkout: false,
+            };
+        // REMOVE_ITEM
+        case "REMOVE_ITEM":
+            const newSelectedItems = state.selectedItems.filter(
+                (item) => item.id !== action.payload.id
+            );
+            return {
+                ...state,
+                selectedItems: [...newSelectedItems],
+                ...sumProducts(newSelectedItems),
+            };
+
+        // INCREASE
+        case "INCREASE":
+            const increaseIndex = state.selectedItems.findIndex(
+                (item) => item.id === action.payload.id
+            );
+            state.selectedItems[index].quantity++;
+            return {
+                ...state,
+                ...sumProducts(state.selectedItems),
+            };
+
+        // DECREASE
+        case "DECREASE":
+            const decreaseIndex = state.selectedItems.findIndex(
+                (item) => item.id === action.payload.id
+            );
+            state.selectedItems[index].quantity--;
+            return {
+                ...state,
+                ...sumProducts(state.selectedItems),
+            };
+
+        // Checkout
+        case "CHECKOUT":
+            return {
+                selectedItems: [],
+                itemsCounter: 0,
+                total: 0,
+                checkout: true,
             };
 
         default:
